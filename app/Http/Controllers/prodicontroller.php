@@ -53,6 +53,7 @@ class prodicontroller extends Controller
         // //Retrun "Data prodi $prodi->nama berhasil disimpan ke database"; //tampilkan pesan berhasil
         // $request->session()->flash('info',"Data prodi $prodi->nama berhasil disimpan ke database");
         // return redirect('prodi/create');
+        $this->authorize('create', Prodi::class);
         $validateData = $request->validate([
             'nama' => 'required|min:5|max:20',
             'foto' => 'required|file|image|max:5000',
@@ -69,8 +70,8 @@ class prodicontroller extends Controller
         $prodi->foto = $nama_file;
         $prodi->save(); // simpan ke dalam prodis
 
-        $request->session()->$request->flash('info', "Data Prodi $prodi->nama berhasil disimpan ke database");
-        return redirect()->route('prodi.create');
+         $request->session()->flash('info', "Data Prodi $prodi->nama berhasil disimpan ke database");
+        return redirect()->route('prodi/create');
     }
 
     public function index(){
@@ -99,11 +100,17 @@ class prodicontroller extends Controller
     }
 
     public function destroy(Prodi $prodi){
+        // $prodi->delete();
+        // return redirect()->route('prodi.index')->with("info", "Prodi $prodi->nama berhasil dihapus.");
+
+        $this->authorize('delete',$prodi);
         $prodi->delete();
         return redirect()->route('prodi.index')->with("info", "Prodi $prodi->nama berhasil dihapus.");
     }
 
-
+    public function __construct(){
+        $this->middleware('auth')->except('create');
+    }
 
 
 }

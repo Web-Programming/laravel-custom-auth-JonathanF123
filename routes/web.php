@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
 route::get('/prodi', [prodicontroller::class,'index']);
 //create data
 Route::get('/prodi/create', [ProdiController::class,'create'])->name('prodi.create');
-Route::post('prodi/store', [ProdiController::class,'store']);
+Route::post('/prodi/store', [ProdiController::class,'store']);
 
 //Read data
  Route::get('/prodi', [ProdiController::class,'index'])->name('prodi.index');
@@ -57,3 +57,9 @@ Route::post('prodi/store', [ProdiController::class,'store']);
  Route::get('/prodi/{prodi}/edit', [ProdiController::class, 'edit'])->name('prodi.edit');
  Route::patch('/prodi/{prodi}', [ProdiController::class,'update'])->name('prodi.update');
  Route::delete('/prodi/{prodi}', [ProdiController::class, 'destroy'])->name('prodi.destroy');
+
+//   Route::get('/home', [App\Http\Controllers\Home])->name('prodi.destroy');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('prodi.index')->middleware('auth');

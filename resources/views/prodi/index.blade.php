@@ -25,13 +25,15 @@
                         <form action="{{route('prodi.destroy', ['prodi' =>$item->id])}}" method="post">
                         <a href="{{url('/prodi/'.$item->id)}}" class="btn btn-warning">Detail</a>
                         <a href="{{url('/prodi/'.$item->id.'/edit')}}" class="btn btn-info">Ubah</a>
-                            @method('DELETE')
-                            @csrf
+                            {{-- @method('DELETE') --}}
+                            @can('delete', $item)
+                            {{-- @csrf --}}
                             <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                {{-- @endforeach --}}
+                @endcan
             </tbody>
         </table>
     </div>
